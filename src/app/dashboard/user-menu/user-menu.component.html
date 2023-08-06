@@ -1,0 +1,22 @@
+<div
+  *ngIf="isMenuOpened"
+  class="position-absolute position-absolute-custom rounded user-menu p-3" 
+  style="border: 1px solid #a5a5a5!important;"
+>
+  <h6 class="text-muted menu-heading">ACCOUNT</h6>
+  <div class="d-flex pt-1">
+    <div
+      class="icon rounded-circles bg-secondary text-light d-flex align-items-center justify-content-center"
+    >
+      {{ userName[0] }}
+    </div>
+    <p class="ms-2 my-auto">{{ userEmail }}</p>
+  </div>
+  <hr />
+  <h6 class="text-muted menu-heading">TRELLO</h6>
+  <div class="py-1 interactable" (click)="handleClick()">
+    Profile and Visibility
+  </div>
+  <hr />
+  <div class="interactable" (click)="onLogout()">Logout</div>
+</div>

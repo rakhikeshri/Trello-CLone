@@ -1,0 +1,65 @@
+<div class="gap-3 d-flex flex-column sidebar">
+  <a
+    routerLink="boards"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="mx-1"
+  >
+    <div class="d-flex justify-content-between align-items-center mx-1">
+      <div class="d-flex gap-2 p-1">
+        <!-- <img src="assets/trello.jpeg" alt="Trello" class="icon-img my-auto" /> -->
+        <h5 class="my-auto">Boards ({{ boardCount$ | async }})</h5>
+      </div>
+      <div
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo"
+      >
+        <img
+          src="assets/plus-bg-removed.png"
+          alt="Trello"
+          class="icon-img my-auto me-1"
+        />
+      </div>
+    </div>
+  </a>
+
+  <div class="accordion custom-scrollbar" id="accordionExample">
+    <div *ngFor="let board of boardsData$ | async" class="accordion-item">
+      <h2 class="accordion-header" [attr.id]="'heading' + board.id">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#collapse' + board.id"
+          aria-expanded="false"
+          [attr.aria-controls]="'collapse' + board.id"
+        >
+          {{ board.title }}
+        </button>
+      </h2>
+      <div
+        [attr.id]="'collapse' + board.id"
+        class="accordion-collapse collapse"
+        [attr.aria-labelledby]="'heading' + board.id"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div
+              class="d-flex align-items-center"
+              [routerLink]="['members', board.id]"
+              style="cursor: pointer"
+            >
+              <img src="assets/members.png" alt="Members" class="icon-img" />
+              <div class="ms-2">Members</div>
+            </div>
+            <div style="cursor: pointer">
+              <!-- <img src="assets/plus.jpeg" alt="Trello" class="icon-img my-auto"> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-nav p-1 pe-0">
+  <div class="container-fluid py-1">
+    <a class="navbar-brand d-flex gap-2 align-items-center" routerLink="home/boards"
+      ><img src="assets/f1_logo.svg" class="logo" />
+      <h5 class="m-0 mt-1" style="font-size: 16px !important; font-weight: 700;">- Task Manager</h5>
+    </a>
+
+    <img
+      src="assets/toggle.png"
+      alt="menu"
+      style="width: 22px"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      class="d-md-none"
+    />
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3">
+        <!-- <li class="nav-item dropdown d-flex align-items-center">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Workspaces
+          </a>
+          <ul class="dropdown-menu">
+            <small class="p-2 text-dark text-opacity-25">Your Workspaces</small>
+            <li><a class="dropdown-item" href="#">Trello Workspace</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown d-flex align-items-center create-dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Create
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Create Board</a></li>
+            <li><a class="dropdown-item" href="#">Create Workspace</a></li>
+          </ul>
+        </li>-->
+      </ul>
+
+      <form
+        class="d-flex align-items-center justify-content-center gap-3 position-relative"
+        role="search"
+      >
+        <input
+          class="form-control nav-search focus mb-2 mb-md-0"
+          type="search"
+          placeholder="Search your boards.."
+          aria-label="Search"
+          (keyup)="searchBoard($event)"
+          #searchInput
+        />
+
+        <ng-container *ngIf="filteredBoard.length > 0">
+          <div class="position-absolute searchBoard bg-white searchBoard">
+            <div
+              *ngFor="let board of filteredBoard; index as board_idx"
+              class="bg-white p-2 m-1 d-flex flex-column border"
+              (click)="navigate_searched_board(board.id, searchInput)"
+            >
+              {{ board.title }}
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+          />
+        </div> -->
+
+        <div (clickOutside)="clickedOutside()">
+          <div
+            class="rounded-circle bg-primary text-light d-flex align-items-center justify-content-center fw-bold p-3 mb-2 mb-md-0"
+            (click)="toggleMenu()"
+          >
+            {{ userName[0] }}
+          </div>
+          <app-user-menu
+            *ngIf="isMenuOpened"
+            [isMenuOpened]="isMenuOpened"
+          ></app-user-menu>
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>

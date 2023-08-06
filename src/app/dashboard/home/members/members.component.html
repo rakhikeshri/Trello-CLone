@@ -1,0 +1,32 @@
+<div class="p-2 mb-3 d-flex">
+    <div class="icon rounded bg-primary text-light d-flex align-items-center justify-content-center fw-bold">
+        {{ boardTitle[0]}}
+    </div>
+    <div class="ms-2 me-5 my-auto">
+        <h5 class="p-0 m-0 fw-bold">{{ boardTitle }}</h5>
+
+        <p class="p-0 m-0 text-muted">
+            Private
+        </p>
+    </div>
+</div>
+<hr>
+<h5 class="mb-4 ms-2">Board Members ({{users.length}})</h5>
+<div *ngFor="let user of users" class="d-flex p-2 mb-2 justify-content-between">
+    <div class="d-flex">
+        <div class="icon rounded-circle bg-warning text-light d-flex align-items-center justify-content-center fw-bold">
+            {{ user.name[0] }}
+        </div>
+        <div class="ms-2 me-5 my-auto">
+            <p class="p-0 m-0">{{ user.name }}</p>
+
+            <p class="p-0 m-0 text-muted">
+                @{{ user.username }}
+            </p>
+        </div>
+    </div>
+    <div>
+        <button (click)="removeMemberFromBoard(user.id)" class="btns text-center" style=" font-size: 15px;">{{user.id
+            === userId ? "Leave" : "Remove"}}</button>
+    </div>
+</div>

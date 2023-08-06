@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+body {
+  overflow: hidden;
+  background-color: #f7f7f7 !important;
+
+  font-family: "Poppins", sans-serif !important;
+}
+
+.focus:focus {
+  outline: none !important;
+}
+
+textarea:hover{
+  border: 1px solid black !important
+}
+textarea:focus{
+  border: 1px solid black !important
+}
+
+@import "../node_modules/font-awesome/css/font-awesome.css";

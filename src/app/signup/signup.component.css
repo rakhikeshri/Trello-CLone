@@ -1,0 +1,188 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+html {
+  font-size: 16px;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  min-height: 100vh;
+}
+a {
+  color: #3484f0;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.input-box {
+  margin-bottom: 14px;
+  text-align: start;
+  position: relative;
+}
+input.form-control {
+  padding-left: 20px !important;
+  color: black;
+}
+.form-control:focus {
+  outline: none !important;
+  box-shadow: unset !important;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+input:focus {
+  outline: none !important;
+  background-color: #f5f7f9;
+  border: 1px solid black !important;
+}
+input {
+  border: 1px solid #ffffff !important;
+}
+input:hover {
+  border: 1px solid black !important;
+}
+button:hover {
+  background-color: #0660d6;
+  cursor: pointer;
+}
+
+span.error {
+  font-size: 0.815rem;
+  line-height: 15px;
+  letter-spacing: 0.03em;
+  color: red;
+}
+
+.form-first-col {
+  width: 100% !important;
+  background-color: #fff;
+  border-radius: 12px 0 0 12px;
+  position: relative;
+}
+
+.tab-form {
+  margin: 50px 170px;
+}
+.side-banner{
+ position: relative;
+}
+.centered-img img{
+  /* height: 65%; */
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-section {
+  height: 100vh;
+  width: 100%;
+}
+
+.third-heading h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.login-col-2 {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position:relative; 
+  background-color: #ffffff;
+}
+
+.third-heading small {
+  font-size: 14px;
+  color: #000;
+}
+
+input {
+  background-color: #f5f7f9;
+  padding: 12px 10px;
+  border: none;
+  border-radius: 8px;
+}
+
+input::placeholder {
+  font-size: 14px;
+  color: #b7bbc0;
+  font-weight: 500px;
+}
+
+.eye-icon {
+  padding: 8px 12px;
+  float: right;
+  cursor: pointer;
+  margin-right: 16px;
+  margin-top: -32px;
+  /* background-image: url('./images/eye-open.svg'); */
+  background-size: 100% 100%;
+  position: relative;
+  background-repeat: no-repeat;
+}
+.visible-p {
+  /* background-image: url('./images/eye-close.svg'); */
+}
+.trello-login-btn {
+  background-color: #157afe;
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+}
+.trello-login-btn:disabled {
+  background-color: #92b5e3;
+}
+.bottom-link,
+.bottom-link a {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  text-decoration-line: unset;
+  color: #000;
+}
+.bottom-link a {
+  color: #287fec;
+  margin-left: 6px;
+}
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  color: #afb4ba;
+  font-weight: 500;
+}
+
+/* **************** RESPONSIVE / MEDIA QUERY START **************** */
+
+@media (max-width: 768px) {
+  .tab-form{
+    margin: 40px ;
+  }
+}
+
+@media (max-width: 575){
+ .tab-form{
+  margin: 40px ;
+ }
+}
+
+@media (max-width: 455){
+  .tab-form{
+   margin: 30px !important;
+  }
+}

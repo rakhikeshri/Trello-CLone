@@ -1,0 +1,90 @@
+.bg-nav {
+    background-color: #FFFFFF;
+}
+
+.logo {
+    width: 100px;
+    /* mix-blend-mode:color-dodge; */
+}
+
+.navbar {
+    padding: 0px !important;
+    border-bottom: 1px solid #efefef;
+}
+
+.nav-link {
+    padding: 14px;
+    margin: 0;
+    color: #b0bbca !important;
+    border-bottom: 3px solid transparent;
+}
+
+.nav-link:hover {
+    border-bottom: 3px solid #157afe;
+    color: #157afe !important;
+}
+
+.dropdown-menu {
+    border: none !important;
+    /* box-shadow: 0 4px 8px 0 rgba(83, 83, 83, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    margin-top: 15px;
+}
+
+.nav-search {
+    font-size: 14px;
+    min-width: 220px;
+    height: 32px;
+    border: 1px solid #a5a5a5;
+    border-radius: 6px;
+    outline: none;
+    color: #000000;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.nav-search:hover {
+    /* width: 600px; */
+    background-color: #FFFFFF;
+    color: #000000;
+    border: 1px solid black;
+}
+
+::placeholder {
+    color: #b0bbca;
+}
+
+.nav-search:focus::placeholder {
+    color: #b0bbca;
+}
+
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.mode {
+    width: 30px;
+}
+
+.navbar .rounded-circle {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.create-dropdown .dropdown-toggle::after {
+    display: none !important;
+}
+
+.searchBoard {
+    left: 0;
+    top: 50px;
+    border: 2px solid gray;
+    border-radius: 4px;
+    z-index: 1500;
+    min-width: 260px;
+    cursor: pointer;
+}
+
+/* .navbar-toggler-icon{
+    background-image: url('assets/toggle.png') !important;
+} */

@@ -1,0 +1,49 @@
+<section class="login-section row">
+  <div class="login-col-1 col-lg-5 col-sm-12 d-none d-lg-block side-banner">
+    <div class="centered-img"><img src="assets/side-banner.png" alt=""></div>
+  </div>
+  <div class="login-col-2 col-lg-7 col-md-12 col-sm-12">
+    <div class="form-first-col">
+      <form action="" class="pt-4 tab-form">
+        <div class="login-heading pb-4">
+          <h3 class="text-black pb-2" style="font-size: 30px;">Log in !</h3>
+          <small class="text-black " style="font-size: 18px;">Start managing your project and team.</small>
+        </div>
+        <div class="input-box">
+          <input name="loginId" id="loginId" type="text" placeholder="enter your username" class="form-control"
+            [(ngModel)]="username" (focus)="usernameErrorMsg = ''" />
+          <span class="error">{{usernameErrorMsg}}</span>
+        </div>
+
+        <div class="input-box">
+          <input name="password" id="password" type="{{ showPassword ? 'text' : 'password' }}"
+            placeholder="At least 8 characters" class="form-control" [(ngModel)]="password"
+            (ngModelChange)="validatePassword()" (focus)="passwordErrorMsg = ''" />
+          <span class="error">{{ passwordErrorMsg }}</span>
+          <span class="eye-icon" (click)="togglePasswordVisibility()"
+            [ngClass]="{'visible-p': showPassword, 'hidden-p': !showPassword}">
+          </span>
+        </div>
+
+        <button id="loginBtn" type="submit" class="trello-login-btn mt-4" [disabled]="password.length < 8"
+          (click)="login()">
+          {{loginBtn}}
+        </button>
+
+        <button id="loginBtn" type="submit" class="trello-login-btn mt-4" (click)="guestLogin()">
+          {{guestLoginBtn}}
+        </button>
+
+        <div class="d-flex align-items-center justify-content-center mt-5 text-center">
+          <div class="bottom-link d-flex align-items-center">
+            Don't have an account?
+            <a routerLink="/signup"> Sign Up here..</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <footer>
+      &#169; 2023 ALL RIGHTS RESERVED
+    </footer>
+  </div>
+</section>

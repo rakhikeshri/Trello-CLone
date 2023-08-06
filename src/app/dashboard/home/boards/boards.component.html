@@ -1,0 +1,261 @@
+<div class="board-wrapper mb-3" *ngIf="numberOfStarredBoards > 0">
+  <p class="heading">Starred Boards</p>
+  <hr />
+  <div class="small-device">
+    <div *ngFor="let board of boardsData">
+      <div
+        *ngIf="board.starredByUserId.includes(userId)"
+        class="new-board"
+        style="position: relative"
+        (click)="handleClick(board.id)"
+        (mouseenter)="hoveredBoard = board.id"
+        (mouseleave)="hoveredBoard = -1"
+      >
+        <span class="title text-capitalize"> {{ board.title }} </span><br />
+        <p class="description mt-1">
+          {{ board.description ? (board.description | slice : 0 : 65) : "" }}
+          <span *ngIf="board.description && board.description.length > 70"
+            >...</span
+          >
+        </p>
+        <img
+          *ngIf="board.starredByUserId.includes(userId); else showEmptyStar"
+          #filledStar
+          src="assets/filled_star.png"
+          alt="starred"
+          style="
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+          "
+          (click)="unstarThisBoard(board.id, $event)"
+        />
+        <ng-template #showEmptyStar>
+          <img
+            #emptyStar
+            src="assets/empty_star.png"
+            alt="starred"
+            [hidden]="!(hoveredBoard === board.id)"
+            style="
+              width: 20px;
+              height: 20px;
+              position: absolute;
+              bottom: 5%;
+              right: 5%;
+            "
+            (click)="starThisBoard(board.id, $event)"
+          />
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="board-wrapper mb-3" *ngIf="recentBoards.length > 0">
+  <p class="heading">Recent Boards</p>
+  <hr />
+  <div class="small-device">
+    <div *ngFor="let recentBoardId of recentBoards">
+      <div *ngFor="let board of boardsData">
+        <div
+          *ngIf="recentBoardId === board.id"
+          class="new-board"
+          style="position: relative"
+          (click)="handleClick(board.id)"
+          (mouseenter)="hoveredBoard = board.id"
+          (mouseleave)="hoveredBoard = -1"
+        >
+          <span class="title text-capitalize"> {{ board.title }} </span><br />
+
+          <p class="description mt-1">
+            {{ board.description | slice : 0 : 0 }}
+            {{ board.description ? (board.description | slice : 0 : 65) : "" }}
+            <span *ngIf="board.description && board.description.length > 70"
+              >...</span
+            >
+          </p>
+          <img
+            *ngIf="board.starredByUserId.includes(userId); else showEmptyStar"
+            #filledStar
+            src="assets/filled_star.png"
+            alt="starred"
+            style="
+              width: 20px;
+              height: 20px;
+              position: absolute;
+              bottom: 5%;
+              right: 5%;
+            "
+            (click)="unstarThisBoard(board.id, $event)"
+          />
+          <ng-template #showEmptyStar>
+            <img
+              #emptyStar
+              src="assets/empty_star.png"
+              alt="starred"
+              [hidden]="!(hoveredBoard === board.id)"
+              style="
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                bottom: 5%;
+                right: 5%;
+              "
+              (click)="starThisBoard(board.id, $event)"
+            />
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="board-wrapper">
+  <p class="heading">F1 Boards</p>
+  <hr *ngIf="boardsData?.length > 0" />
+  <div class="small-device">
+    <div
+      *ngFor="let board of boardsData"
+      class="new-board"
+      style="position: relative"
+      (click)="handleClick(board.id)"
+      (mouseenter)="hoveredBoard = board.id"
+      (mouseleave)="hoveredBoard = -1"
+    >
+      <span class="title text-capitalize"> {{ board.title }} </span><br />
+      <p class="description mt-1">
+        {{ board.description ? (board.description | slice : 0 : 65) : "" }}
+        <span *ngIf="board.description && board.description.length > 70"
+          >...</span
+        >
+      </p>
+      <img
+        *ngIf="board.starredByUserId.includes(userId); else showEmptyStar"
+        #filledStar
+        src="assets/filled_star.png"
+        alt="starred"
+        style="
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          bottom: 5%;
+          right: 5%;
+        "
+        (click)="unstarThisBoard(board.id, $event)"
+      />
+      <ng-template #showEmptyStar>
+        <img
+          #emptyStar
+          src="assets/empty_star.png"
+          alt="starred"
+          [hidden]="!(hoveredBoard === board.id)"
+          style="
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+          "
+          (click)="starThisBoard(board.id, $event)"
+        />
+      </ng-template>
+    </div>
+
+    <div
+      class="new-board create-new-board text-center p-2 d-none d-md-flex"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      data-bs-whatever="@mdo"
+    >
+      <div class="plus">+</div>
+    </div>
+
+    <div
+      class="modal fade"
+      data-backdrop="static"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Create Board
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="addBoards">
+              <div class="mb-2">
+                <label for="recipient-name" class="col-form-label"
+                  >Board Title</label
+                >
+                <input
+                  type="text"
+                  class="form-control mb-1"
+                  id="recipient-name"
+                  placeholder="title here.. "
+                  formControlName="title"
+                  [(ngModel)]="title"
+                  (ngModelChange)="validateTitle()"
+                />
+                <span class="input-char-error" #inputCharError
+                  >Keep title short (20 characters max).</span
+                ><br />
+                <label for="recipient-desc" class="col-form-label p-0"
+                  >Description</label
+                >
+                <textarea
+                  cols="25"
+                  rows="3"
+                  type="text"
+                  placeholder="description here.."
+                  formControlName="description"
+                  class="w-100 p-2 border-none outline-none mt-2 focus"
+                  [(ngModel)]="description"
+                  (ngModelChange)="validateDescription()"
+                  style="border-radius: 6px; border: 1px solid #ced4da"
+                ></textarea>
+                <!-- <span class="input-char-error-desc" #inputCharErrorDesc
+                  >Keep title short (80 characters max).</span
+                ><br /> -->
+              </div>
+              <button
+                type="submit"
+                class="btn btn-create"
+                data-bs-dismiss="modal"
+                [disabled]="addBoards.value.title === ''"
+                (click)="saveBoards()"
+              >
+                Create
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- create board for mobiles -->
+  <div class="mt-3 d-md-none">
+    <hr />
+    <p class="heading">Create Boards</p>
+    <div
+      class="new-board create-new-board text-center p-2"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      data-bs-whatever="@mdo"
+    >
+      <div class="plus">+</div>
+    </div>
+  </div>
+</div>

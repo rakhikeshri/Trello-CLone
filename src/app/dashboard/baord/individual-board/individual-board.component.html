@@ -1,0 +1,902 @@
+<div class="main-container d-flex">
+  <div
+    class="sidebar_inner_container"
+    [ngClass]="{
+      show_sidebar: toggle_Sidebar === true,
+      hide_sidebar: toggle_Sidebar === false
+    }"
+  >
+    <div
+      class="d-flex align-items-center justify-content-between px-2"
+      style="height: 46px; border-bottom: 1px solid gray"
+    >
+      <h5
+        style="font-size: 16px; font-weight: 600; color: rgb(0, 0, 0)"
+        class="my-auto"
+      >
+        F1 WORKSPACE
+      </h5>
+
+      <!-- close_sidebar_logo -->
+      <img
+        (click)="hideSidebar()"
+        src="assets/close-sidebar.png"
+        class="toggle-btn my-auto"
+        alt="Close Sidebar"
+        style="margin-top: -12px; width: 18px; height: 18px; cursor: pointer"
+      />
+    </div>
+
+    <div>
+      <div
+        class="plus-member new-board p-2 position-relative mt-1 d-flex justify-content-between align-items-center"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo"
+        style="
+          cursor: pointer;
+          font-weight: 500;
+          font-size: 15px;
+          color: rgb(182, 182, 182);
+        "
+        (click)="member_modal_close()"
+      >
+        <span> Members </span>
+        <span style="font-size: 20px" class="plus-member"> + </span>
+      </div>
+
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border: none !important">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Invite to Workspace
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                (click)="member_modal_close()"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form
+                #emailForm="ngForm"
+                (ngSubmit)="searchUsers(emailForm.value, input_search)"
+              >
+                <div class="mb-2">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    ngModel
+                    required
+                    email
+                    placeholder="enter email address"
+                    #input_search
+                  />
+                </div>
+                <div
+                  *ngIf="invitedUser && invitationError === ''; else errPrompt"
+                  class="d-flex justify-content-between align-items-center"
+                >
+                  <div
+                    class="d-flex justify-content-center align-items-center der gap-2"
+                  >
+                    <div
+                      class="icon m-e rounded-circle bg-warning text-light d-flex align-items-center justify-content-center fw-bold"
+                    >
+                      {{ invitedUser.name[0] }}
+                    </div>
+                    <div class="d-flex flex-column">
+                      <span class="p-0 m-0">{{ invitedUser.name }}</span>
+                      <span class="p-0 m-0 text-muted"
+                        >@{{ invitedUser.username }}</span
+                      >
+                    </div>
+                  </div>
+                  <select
+                    class="form-control form-select align-self-center"
+                    name="accessType"
+                    id="accessType"
+                    aria-label="Role"
+                    style="height: 35px; width: 100px"
+                    #accessType
+                  >
+                    <option value="editor">Editor</option>
+                    <option value="admin">Admin</option>
+                    <option value="viewer">Viewer</option>
+                  </select>
+                  <button
+                    type="button"
+                    (click)="
+                      sendInvite(invitedUser.id, accessType.value, input_search)
+                    "
+                    class="p-10 text-white btn-save"
+                    data-bs-dismiss="modal"
+                  >
+                    Invite
+                  </button>
+                </div>
+                <ng-template #errPrompt>
+                  <p class="my-2 text-danger">{{ invitationError }}</p>
+                </ng-template>
+
+                <button
+                  type="submit"
+                  class="btn btn-create border text-white"
+                  [disabled]="emailForm.invalid"
+                  *ngIf="!invitedUser"
+                >
+                  Search
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="members.length > 0">
+        <div
+          *ngFor="let member of members"
+          class="m-2 d-flex gap-2 align-items-center"
+        >
+          <div
+            style="font-size: 14px"
+            class="rounded-circle-member mb-1 bg-primary text-light d-flex align-items-center justify-content-center fw-bold p-2"
+          >
+            {{ member.name[0] }}
+          </div>
+          <span style="font-size: 14px">
+            {{ member.name }}
+          </span>
+        </div>
+      </div>
+
+      <div
+        class="p-2 mt-2"
+        style="font-weight: 500; font-size: 15px; color: rgb(182, 182, 182)"
+      >
+        Board Description
+      </div>
+      <div class="mx-2">
+        <div class="d-flex flex-column gap-2">
+          <span class="fw-bold text-capitalize" style="font-size: 14px">
+            {{ current_board_title }}
+          </span>
+          <span style="font-size: 14px">
+            {{ current_board_desc }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <nav
+      class="navbar navbar-expand-lg bg-body-tertiary nav-container d-flex justify-content-between px-2"
+    >
+      <div class="d-flex align-items-center justify-content-center gap-2">
+        <!-- {{ open_sidebar_logo }} -->
+        <img
+          *ngIf="toggle_Sidebar === false"
+          src="assets/toggle.png"
+          class="toggle-btn me-3 ms-1"
+          alt="open sidebar"
+          (click)="showSidebar()"
+          style="width: 22px; cursor: pointer"
+        />
+
+        <h2 class="m-0 p-0 me-3 mt-1 navbar-brand">
+          {{ current_board_title || "Board" }}
+        </h2>
+
+        <img
+          *ngIf="isStarred === false"
+          src="assets/empty_star.png"
+          alt="starred"
+          (click)="notStarred()"
+          style="width: 22px; cursor: pointer"
+        />
+        <img
+          *ngIf="isStarred === true"
+          src="assets/filled_star.png"
+          alt="starred"
+          (click)="starred()"
+          style="width: 22px; cursor: pointer"
+        />
+      </div>
+
+      <div class="drop" clickOutside (clickOutside)="clickedOutside()">
+        <div class="dropt-btn position-relative">
+          <button (click)="toggleDropdownMenu()">...</button>
+        </div>
+        <div>
+          <div *ngIf="isDropdownMenuOpened" class="dropdown-box">
+            <h4 class="text-center" style="position: sticky !important">
+              Menu
+            </h4>
+            <ul class="menu-list" style="padding: 0px">
+              <hr />
+              <li>
+                <div class="theme-options dropdown-item">
+                  <p
+                    class="mx-auto px-1"
+                    (click)="toggleCode()"
+                    style="font-size: 14px; width: fit-content"
+                  >
+                    Change Background
+                  </p>
+                  <div *ngIf="showCodes">
+                    <ul
+                      class="nav nav-tabs pb-2 d-flex align-items-center justify-content-center gap-2"
+                      id="myTab"
+                      role="tablist"
+                    >
+                      <li class="nav-item text-center" role="presentation">
+                        <button
+                          class="nav-link"
+                          id="image-tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#image"
+                          type="button"
+                          role="tab"
+                          aria-controls="image"
+                          aria-selected="false"
+                        ></button>
+                        Image
+                      </li>
+                      <li class="nav-item text-center" role="presentation">
+                        <button
+                          class="nav-link"
+                          id="color-tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#color"
+                          type="button"
+                          role="tab"
+                          aria-controls="color"
+                          aria-selected="true"
+                        ></button>
+                        Color
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="tab-content" id="myTabContent" *ngIf="showCodes">
+                    <div
+                      class="tab-pane fade show"
+                      id="image"
+                      role="tabpanel"
+                      aria-labelledby="image-tab"
+                    >
+                      <div
+                        class="contianer py-4 px-3"
+                        style="height: 40vh; overflow-y: scroll"
+                      >
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-img1"
+                              class="thumbnail"
+                              [ngClass]="
+                                storedTheme === 'theme-img1' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-img1')"
+                            ></div>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-img2"
+                              class="thumbnail"
+                              [ngClass]="
+                                storedTheme === 'theme-img2' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-img2')"
+                            ></div>
+                          </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-img3"
+                              class="thumbnail"
+                              [ngClass]="
+                                storedTheme === 'theme-img3' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-img3')"
+                            ></div>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-img4"
+                              class="thumbnail"
+                              [ngClass]="
+                                storedTheme === 'theme-img4' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-img4')"
+                            ></div>
+                          </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-img5"
+                              class="thumbnail"
+                              [ngClass]="
+                                storedTheme === 'theme-img5' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-img5')"
+                            ></div>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-img6"
+                              class="thumbnail"
+                              [ngClass]="
+                                storedTheme === 'theme-img6' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-img6')"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="tab-pane fade"
+                      id="color"
+                      role="tabpanel"
+                      aria-labelledby="color-tab"
+                    >
+                      <div
+                        class="contianer py-4 px-3"
+                        style="height: 40vh; overflow-y: scroll"
+                      >
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-white"
+                              class="thumbnail theme-white"
+                              [ngClass]="
+                                storedTheme === 'theme-white' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-white')"
+                            ></div>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-blue"
+                              class="thumbnail theme-blue"
+                              [ngClass]="
+                                storedTheme === 'theme-blue' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-blue')"
+                            ></div>
+                          </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-orange"
+                              class="thumbnail theme-orange"
+                              [ngClass]="
+                                storedTheme === 'theme-orange' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-orange')"
+                            ></div>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-purple"
+                              class="thumbnail theme-purple"
+                              [ngClass]="
+                                storedTheme === 'theme-purple' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-purple')"
+                            ></div>
+                          </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-green"
+                              class="thumbnail theme-green"
+                              [ngClass]="
+                                storedTheme === 'theme-green' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-green')"
+                            ></div>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div
+                              id="theme-black"
+                              class="thumbnail theme-black"
+                              [ngClass]="
+                                storedTheme === 'theme-black' ? 'active' : ''
+                              "
+                              (click)="setTheme('theme-black')"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="content {{ storedTheme }} " role="main">
+      <div
+        class="d-flex p-2 gap-2 board-scroll"
+        cdkDropListGroup
+        [ngClass]="{
+          close_board_scroll: toggle_Sidebar === false,
+          open_board_scroll: toggle_Sidebar === true
+        }"
+      >
+        <ng-container *ngFor="let list of listsData; index as list_idx">
+          <div class="p-2 rounded listItem-container">
+            <div
+              class="mb-1 text-black d-flex align-items-center justify-content-between"
+            >
+              <div
+                class="position-relative listItem-title"
+                [attr.data-bs-target]="'#exampleModal' + list_idx"
+                data-bs-toggle="modal"
+                data-bs-whatever="@mdo"
+                style="height: fit-content; cursor: pointer"
+                (click)="autoFillInput(listTitle, list.title)"
+              >
+                {{ list.title }}
+                <img
+                  src="assets/edit_icon.png"
+                  alt="update title"
+                  style="height: 12px; width: 12px"
+                />
+              </div>
+              <!-- <div class="listItem-date">{{ list.date }}</div> -->
+              <div class="listItem-date">{{ formatDate(list.date) }}</div>
+
+              <div
+                class="modal modal-update"
+                [attr.id]="'exampleModal' + list_idx"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header" style="border: none !important">
+                      <input
+                        type="text"
+                        class="p-1 me-2 w-100 focus border rounded"
+                        placeholder="Enter Updated Title"
+                        [(ngModel)]="updatedListTitle"
+                        (keydown.enter)="updateListTitle(list.id, list)"
+                        #listTitle
+                      />
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="pt-0 modal-body text-dark">
+                      <button
+                        class="text-white btn-save"
+                        (click)="updateListTitle(list.id, list)"
+                        data-bs-dismiss="modal"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr style="border-top: 1px solid grey" class="my-3" />
+
+            <div
+              class="cardsItem"
+              cdkDropList
+              #{{list_idx}}="cdkDropList"
+              [cdkDropListData]="list.cards"
+              (cdkDropListDropped)="onCardDrop($event)"
+            >
+              <div class="rounded p-1">
+                <div
+                  cdkDrag
+                  *ngFor="let card of list.cards; index as card_idx"
+                  class="rounded"
+                  style="cursor: pointer; background-color: #edf6ff"
+                >
+                  <div
+                    class="d-flex align-items-center justify-content-between gap-2"
+                  >
+                    <div
+                      cdkDragHandle
+                      class="d-flex mb-2 p-2 justify-content-between singleItem"
+                      style="height: fit-content; width: 100%"
+                    >
+                      <div
+                        [attr.data-bs-target]="
+                          '#exampleModal' + list_idx + card_idx
+                        "
+                        data-bs-toggle="modal"
+                        data-bs-whatever="@mdo"
+                        style="cursor: pointer"
+                        (click)="activeListId(list.id, card.id)"
+                      >
+                        <p class="m-0 text-black cardItem-title">
+                          {{ card.title }}
+                        </p>
+                        <div
+                          [innerHTML]="card.desc"
+                          class="m-0 text-dark p-0 card-inner-text"
+                        ></div>
+                        <div
+                          class="text-dark d-flex align-items-center gap-1"
+                          style="width: fit-content"
+                          *ngIf="getChecklistLength(card.id) > 0"
+                          [ngClass]="{
+                            all_checked:
+                              getChecked_ChecklistLength(card.id) ===
+                              getChecklistLength(card.id)
+                          }"
+                        >
+                          <img
+                            *ngIf="
+                              getChecked_ChecklistLength(card.id) !==
+                              getChecklistLength(card.id)
+                            "
+                            src="assets/checklist-black.png"
+                            alt="checklists"
+                            style="width: 13px; height: 13px"
+                          />
+                          <img
+                            *ngIf="
+                              getChecked_ChecklistLength(card.id) ===
+                              getChecklistLength(card.id)
+                            "
+                            src="assets/checklist-white.png"
+                            alt="checklists"
+                            style="width: 12.5px; height: 13px"
+                          />
+
+                          <div
+                            *ngIf="getChecklistLength(card.id) > 0"
+                            style="
+                              font-size: 12px;
+                              background-color: transparent;
+                            "
+                          >
+                            {{ getChecked_ChecklistLength(card.id) }}/{{
+                              getChecklistLength(card.id)
+                            }}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-row">
+                        <img
+                          src="assets/edit_icon.png"
+                          class="d-none ms-2 my-auto"
+                          alt="update card"
+                          style="height: 16px; width: 16px"
+                          [attr.data-bs-target]="
+                            '#exampleModal' + list_idx + 98098
+                          "
+                          data-bs-toggle="modal"
+                          data-bs-whatever="@mdo"
+                          (click)="currCardId(card.id, list.id)"
+                          (click)="autoFillInput(cardTitle, card.title)"
+                        />
+                        <img
+                        src="assets/delete-card.png"
+                        class="d-none ms-2 my-auto"
+                        alt="delete card"
+                        style="height: 20px; width: 20px"
+                        [attr.data-bs-target]="
+                          '#exampleModalDel' + list_idx + card_idx"
+                        data-bs-toggle="modal"
+                        data-bs-whatever="@mdo"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- card title update modal starts -->
+                  <div
+                    class="modal modal-update"
+                    style="background: transparent !important"
+                    [attr.id]="'exampleModal' + list_idx + 98098"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div
+                          class="modal-header"
+                          style="border: none !important"
+                        >
+                          <input
+                            type="text"
+                            class="p-1 me-2 w-100 focus border rounded"
+                            placeholder="Enter Updated Title"
+                            [(ngModel)]="updatedCardTitle"
+                            (keydown.enter)="updateCardTitle()"
+                            #cardTitle
+                          />
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="pt-0 modal-body text-dark">
+                          <button
+                            class="text-white btn-save"
+                            (click)="updateCardTitle()"
+                            data-bs-dismiss="modal"
+                          >
+                            Update
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- card title update modal ends -->
+
+                  <!-- Delete card Modal start  -->
+                  <div
+                    class="modal"
+                    style="background: transparent !important"
+                    [attr.id]="'exampleModalDel' + list_idx + card_idx"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div
+                          class="modal-header"
+                          style="border: none !important"
+                        >
+                          <h1 class="modal-title fs-5 text-dark text-capitalize">
+                            Delete - {{card.title}}
+                          </h1>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body text-dark">
+                          <div class="d-flex align-items-center justify-content-between">
+                            <button
+                            class="mt-2 text-white btn-danger btn-save"
+                              data-bs-dismiss="modal"
+                              (click)="deleteCard(card.id)"
+                            >
+                            Delete
+                          </button>
+                          <button
+                            class="mt-2 text-white btn-save"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            Cancel
+                          </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Delete card Modal end  -->
+
+                  <!-- description modal starts -->
+                  <div
+                    class="modal modal-2"
+                    [attr.id]="'exampleModal' + list_idx + card_idx"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div
+                          class="modal-header"
+                          style="border: none !important"
+                        >
+                          <h1
+                            class="modal-title fs-5 text-dark text-capitalize"
+                          >
+                            {{ card.title }}
+                          </h1>
+
+                          <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                          ></button>
+
+                          <img
+                            src="assets/delete-card.png"
+                            class="ms-2 my-auto"
+                            alt="delete card"
+                            style="height: 22px; width: 24px; margin-left: 15px !important;"
+                            (click)="deleteCard(card.id)"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          />
+                        </div>
+
+                        <div class="modal-body text-dark">
+                          <div class="row">
+                            <div class="col-md-8">
+                              <angular-editor
+                                class="bg-warning"
+                                [placeholder]="'Enter text here..'"
+                                [config]="config"
+                                [(ngModel)]="text_editor_content"
+                              ></angular-editor>
+
+                              <button
+                                class="mt-2 text-white mb-2 btn-save"
+                                (click)="saveCardsDesc(card.id)"
+                              >
+                                save
+                              </button>
+
+                              <!-- comment starts -->
+                              <textarea
+                                cols="30"
+                                rows="5"
+                                type="text"
+                                placeholder="Write a comment..."
+                                [(ngModel)]="comment"
+                                class="w-100 p-2 border-none outline-none mt-2 focus"
+                                style="border: 1px solid #ddd"
+                              ></textarea>
+                              <button
+                                class="mt-2 text-white mb-2 btn-save"
+                                (click)="saveCardsComment(card.id)"
+                              >
+                                Add
+                              </button>
+                              <hr *ngIf="card.comments.length > 0" />
+                              <div
+                                *ngFor="let comment of card.comments"
+                                class="d-flex mb-1 align-items-center gap-2"
+                              >
+                                <div
+                                  class="icon rounded-circles bg-secondary text-light d-flex align-items-center justify-content-center text-capitalize"
+                                >
+                                  {{ comment.email[0] }}
+                                </div>
+                                <div class="d-flex flex-column">
+                                  <span
+                                    class="me-1"
+                                    style="font-size: 14px; font-weight: 600"
+                                    >{{ comment.email }}</span
+                                  >
+                                  <p class="m-0" style="font-size: 14px">
+                                    {{ comment.comment }}
+                                  </p>
+                                </div>
+                              </div>
+                              <!-- comment ends -->
+                            </div>
+
+                            <div class="col-md-4 d-flex flex-column gap-2">
+                              <!-- checklists starts here-->
+                              
+                              <div class="d-flex gap-2 align-items-center justify-content-between ">
+                                <input
+                                type="text"
+                                class="w-100 focus border form-control"
+                                  placeholder="Add Checklist"
+                                  [(ngModel)]="checklistTitle"
+                                  (keydown.enter)="saveChecklistsData(card.id)"
+                                  style="height: 35px !important;"
+                                />
+                                <button
+                                  class="btn-plus-add border"
+                                  (click)="saveChecklistsData(card.id)"
+                                  style="font-size: 20px;"
+                                >
+                                  +
+                                </button>
+                              </div>
+                              <!-- <div class="p-2 bg-light">
+                                Checklists
+                              </div> -->
+                              <ng-container
+                              *ngFor="let checklist of checklistsData"
+                              >
+                              <div
+                                  *ngIf="checklist.card_id === card.id"
+                                  class="rounded d-flex"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    [checked]="checklist.isChecked"
+                                    (change)="
+                                      toggleCheckbox(checklist.id, card.id)
+                                    "
+                                    style="cursor: pointer"
+                                  />
+                                  <span class="ms-2">{{
+                                    checklist.title
+                                  }}</span>
+                                </div>
+                              </ng-container>
+                              <!-- checklists ends here-->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- description modal ends  -->
+                </div>
+              </div>
+            </div>
+
+            <form [formGroup]="addCardsItem" class="d-flex gap-1 addItem">
+              <input
+                type="text"
+                class="form-control focus"
+                id="recipient-name"
+                placeholder="Add a card.."
+                formControlName="title"
+                (click)="updateCurrentListId(list.id)"
+              />
+              <button
+                class="bg-white btn-plus-add"
+                data-bs-dismiss="modal"
+                (click)="saveCardsItem()"
+              >
+                +
+              </button>
+            </form>
+          </div>
+        </ng-container>
+
+        <form [formGroup]="addLists" class="listItem-container p-2">
+          <span class="listItem-title bg-secondary text-light p-1 px-2 rounded"
+            >Add New List</span
+          >
+
+          <div class="d-flex gap-1 mt-3">
+            <input
+              type="text"
+              class="form-control focus border-none"
+              id="recipient-name"
+              placeholder="Add a list.."
+              formControlName="title"
+            />
+            <button
+              class="btn-plus-add"
+              data-bs-dismiss="modal"
+              (click)="saveLists()"
+            >
+              +
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

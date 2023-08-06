@@ -1,0 +1,9 @@
+.show_sidebar{
+    display: block;
+}
+.hide_sidebar{
+    display: none;
+}
+.sidebar{
+    background-color: rgb(191, 191, 233);
+}

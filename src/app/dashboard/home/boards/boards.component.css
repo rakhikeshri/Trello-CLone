@@ -1,0 +1,126 @@
+.heading {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.new-board {
+  width: 220px;
+  height: 120px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid #ebebeb;
+  transition: all 0.2s ease-in-out;
+  padding: 12px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 16px !important;
+  font-weight: 500;
+  max-width: 200px;
+}
+
+.description {
+  font-size: 14px;
+  color: rgb(153, 153, 153);
+}
+
+.plus {
+  font-size: 45px;
+  font-weight: 400;
+  color: #9c9c9c;
+}
+
+.create-new-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.create-new-board:hover {
+  background-color: #edf6ff;
+}
+
+.modal {
+  top: 15% !important;
+  width: fit-content;
+  left: 40% !important;
+  border-radius: none !important;
+}
+
+.modal .btn-create {
+  background-color: #157afe !important;
+  color: #ffffff !important;
+  width: 100% !important;
+  margin-top: 1rem;
+}
+
+.modal-header {
+  border: none !important;
+}
+
+.board-wrapper {
+  padding-left: 6px;
+  padding-top: 0;
+}
+.board-wrapper h5 {
+  font-size: 18px;
+  font-weight: 700 !important;
+}
+hr {
+  border-top: 2px solid #c2c2c2;
+}
+input:hover {
+  border: 1px solid !important;
+}
+input:focus {
+  outline: none;
+  border: 1px solid black !important;
+  box-shadow: none;
+}
+
+.modal .btn-create:hover {
+  background-color: #0660d6 !important;
+}
+
+.input-char-error {
+  font-size: 12px;
+  display: none;
+  color: red;
+  position: absolute;
+}
+
+.input-char-error-desc {
+  font-size: 12px;
+  display: none;
+  color: red;
+  position: absolute;
+}
+
+.small-device {
+  display: flex;
+  justify-content: flex-start; 
+  flex-wrap: wrap;
+}
+
+@media (max-width: 767px) {
+  .small-device {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .small-device .new-board {
+    width: 220px !important;
+    min-width: 220px;
+  }
+
+  .modal {
+    width: 80%;
+    left: 10% !important;
+  }
+  
+}

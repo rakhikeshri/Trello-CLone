@@ -1,0 +1,168 @@
+<!-- <div class="col-md-4 mx-auto bg-light mt-2 p-4 rounded custom-scrollbar" style="height: 90vh; overflow-y: scroll;">
+    <h3 class="mb-3">Manage your personal information</h3>
+    <div class="d-flex py-1">
+        <div
+            class=" icon rounded-circle bg-warning text-light d-flex align-items-center justify-content-center fw-bold ">
+            {{user.name[0]}}
+        </div>
+        <div class="my-auto">
+            <h5 class="ms-2 mb-0 pb-0">{{user.name}}</h5>
+            <p class="ms-2 mt-0 pt-0">@{{user.username}}</p>
+        </div>
+    </div>
+
+    <h4 class="mt-4">About</h4>
+    <hr>
+    <form #myForm="ngForm" (ngSubmit)="submitForm()" class="needs-validation">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" name="username" (ngModelChange)="onChange('username')"
+                [(ngModel)]="user.username" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" (ngModelChange)="onChange('name')" [(ngModel)]="user.name"
+                class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" (ngModelChange)="onChange('email')" [(ngModel)]="user.email"
+                class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" id="phone" name="phone" (ngModelChange)="onChange('phone')" [(ngModel)]="user.phone"
+                class="form-control" required>
+        </div>
+
+        <h4 class="mt-4">Address</h4>
+        <hr>
+
+        <div class="mb-3">
+            <label for="base" class="form-label">Base</label>
+            <input type="text" id="base" name="base" (ngModelChange)="onChange('base')" [(ngModel)]="user.address.base"
+                class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="landmark" class="form-label">Landmark</label>
+            <input type="text" id="landmark" name="landmark" (ngModelChange)="onChange('landmark')"
+                [(ngModel)]="user.address.landmark" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" id="city" name="city" (ngModelChange)="onChange('city')" [(ngModel)]="user.address.city"
+                class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="state" class="form-label">State</label>
+            <input type="text" id="state" name="state" (ngModelChange)="onChange('state')"
+                [(ngModel)]="user.address.state" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" id="country" name="country" (ngModelChange)="onChange('country')"
+                [(ngModel)]="user.address.country" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary"
+            [disabled]="!myForm.valid || editedFields.length === 0">Submit</button>
+    </form>
+
+</div> -->
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="container" style="position:relative;">
+            <button class="back-btn" id="back-btn" (click)="goBack()" >Back</button>
+            <div class="row d-flex align-items-center justify-content-center ">
+                <div class="col-lg-6 col-md-8 col-sm-10 custom-scrollbar" style="height: 90vh; overflow-y: scroll;">
+                    <div class="mx-auto bg-light mt-2 p-4 rounded user-profile-form-wrapper">
+                        <h3 class="mb-3">Manage your personal information</h3>
+                        <div class="d-flex py-1">
+                            <div
+                                class=" icon rounded-circle bg-warning text-light d-flex align-items-center justify-content-center fw-bold ">
+                                {{user.name[0]}}
+                            </div>
+                            <div class="my-auto">
+                                <h5 class="ms-2 mb-0 pb-0">{{user.name}}</h5>
+                                <p class="ms-2 mt-0 pt-0">@{{user.username}}</p>
+                            </div>
+                        </div>
+                    
+                        <h4 class="mt-4">About</h4>
+                        <hr>
+                        <form #myForm="ngForm" (ngSubmit)="submitForm()" class="needs-validation">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" id="username" name="username" (ngModelChange)="onChange('username')"
+                                    [(ngModel)]="user.username" class="form-control" required>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" name="name" (ngModelChange)="onChange('name')" [(ngModel)]="user.name"
+                                    class="form-control" required>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" name="email" (ngModelChange)="onChange('email')" [(ngModel)]="user.email"
+                                    class="form-control" required>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" (ngModelChange)="onChange('phone')" [(ngModel)]="user.phone"
+                                    class="form-control" required>
+                            </div>
+                    
+                            <h4 class="mt-4">Address</h4>
+                            <hr>
+                    
+                            <div class="mb-3">
+                                <label for="base" class="form-label">Base</label>
+                                <input type="text" id="base" name="base" (ngModelChange)="onChange('base')" [(ngModel)]="user.address.base"
+                                    class="form-control" required>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <label for="landmark" class="form-label">Landmark</label>
+                                <input type="text" id="landmark" name="landmark" (ngModelChange)="onChange('landmark')"
+                                    [(ngModel)]="user.address.landmark" class="form-control" required>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" id="city" name="city" (ngModelChange)="onChange('city')" [(ngModel)]="user.address.city"
+                                    class="form-control" required>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <label for="state" class="form-label">State</label>
+                                <input type="text" id="state" name="state" (ngModelChange)="onChange('state')"
+                                    [(ngModel)]="user.address.state" class="form-control" required>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <label for="country" class="form-label">Country</label>
+                                <input type="text" id="country" name="country" (ngModelChange)="onChange('country')"
+                                    [(ngModel)]="user.address.country" class="form-control" required>
+                            </div>
+                    
+                            <button type="submit" class="btn btn-primary"
+                                [disabled]="!myForm.valid || editedFields.length === 0">Update</button>
+                        </form>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

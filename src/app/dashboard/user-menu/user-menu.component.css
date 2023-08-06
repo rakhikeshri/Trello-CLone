@@ -1,0 +1,33 @@
+.position-absolute-custom {
+    top: 48px;
+    right: -2px;
+    z-index: 500;
+}
+
+.user-menu {
+    padding: 0;
+    width: 250px;
+    background-color: #fff;
+    border: 1px solid grey;
+}
+
+.rounded-circles{
+    height: 40px !important;
+    width: 40px !important;
+    font-weight: 500;
+    border-radius: 100%;
+}
+
+.interactable {
+    cursor: pointer;
+}
+
+.menu-heading {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+}

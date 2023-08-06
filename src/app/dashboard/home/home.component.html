@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-sm-block col-sm-4 col-md-3" style="
+            background-color: #fff;
+            padding: 20px 10px;
+            border:1px solid #efefef;
+            /* border-radius: 8px; */
+            ">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="col-12 col-sm-8 col-md-9 custom-scrollbar" style="
+            background-color: whitesmoke;
+            padding: 20px 5px;
+            border:1px solid #efefef;
+            /* border-radius: 8px; */
+            height: 90vh; overflow-y: scroll;
+        ">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
